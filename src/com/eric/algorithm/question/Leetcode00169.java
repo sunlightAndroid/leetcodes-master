@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class Leetcode00136 {
+public class Leetcode00169 {
 
-    public int singleNumber(int[] nums) {
+    public int majorityElement(int[] nums) {
         Map<Integer,Integer> map  = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             if(map.containsKey(nums[i])){
@@ -19,21 +19,24 @@ public class Leetcode00136 {
         }
         Set<Map.Entry<Integer, Integer>> entries = map.entrySet();
         Iterator<Map.Entry<Integer, Integer>> iterator = entries.iterator();
+        int max = 0;
+        int result = 0;
         while (iterator.hasNext()){
               Map.Entry<Integer, Integer> next = iterator.next();
               int key = next.getKey();
               int value = next.getValue();
-              if(value == 1){
-                  return key;
+              if(max < value){
+                  max = value;
+                  result = key;
               }
         }
-        return 0;
+        return result;
     }
     static class Test {
         public static void main(String[] args) {
-            Leetcode00136 solution = new Leetcode00136();
+            Leetcode00169 solution = new Leetcode00169();
             int[] array = new int[]{2,2,1};
-            int result =  solution.singleNumber(array);
+            int result =  solution.majorityElement(array);
             System.out.println(result);
         }
     }
