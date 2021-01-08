@@ -4,6 +4,7 @@ import com.eric.algorithm.model.TreeNode;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class 二叉树遍历 {
 
@@ -38,10 +39,29 @@ public class 二叉树遍历 {
         }
     }
 
+    /**
+     * 非递归的实现方式
+     * 采用栈
+     */
+    public void travelWithStack(TreeNode root) {
+        TreeNode treeNode = root;
+        Stack<TreeNode> stack = new Stack<>();
+        while (treeNode != null || !stack.empty()) {
+            while (treeNode != null) {
+                System.out.print(treeNode.val + " ");
+                stack.push(treeNode);
+                treeNode = treeNode.left;
+            }
+            // 左子树结束，弹出当前节点，从而访问右节点
+            TreeNode node = stack.pop();
+            treeNode = node.right;
+        }
+    }
+
     public static class Test {
         public static void main(String[] args) {
             二叉树遍历 solution = new 二叉树遍历();
-            solution.travel(createNode());
+            solution.travelWithStack(createNode());
         }
     }
 
