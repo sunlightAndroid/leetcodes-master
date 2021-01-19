@@ -58,10 +58,30 @@ public class 二叉树遍历 {
         }
     }
 
+    /**
+     * 前序遍历：非递归的实现方式
+     * 采用栈
+     */
+    public void travelsWithStack(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.empty()) {
+            TreeNode currentNode = stack.pop();
+            System.out.println(currentNode.val);
+            if (currentNode.right != null) {
+                stack.push(currentNode.right);
+            }
+            if(currentNode.left != null){
+                stack.push(currentNode.left);
+            }
+        }
+    }
+
+
     public static class Test {
         public static void main(String[] args) {
             二叉树遍历 solution = new 二叉树遍历();
-            solution.travelWithStack(createNode());
+            solution.travelsWithStack(createNode());
         }
     }
 
