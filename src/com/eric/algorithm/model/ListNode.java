@@ -19,11 +19,11 @@ public class ListNode {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("[ ");
+        builder.append("[");
         for (ListNode node = this; node != null; node = node.next) {
             builder.append(node.val + " ");
         }
-        builder.append(" ]");
+        builder.append("]");
         return builder.toString();
     }
 }

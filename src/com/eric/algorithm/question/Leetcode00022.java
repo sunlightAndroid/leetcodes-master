@@ -12,7 +12,7 @@ public class Leetcode00022 {
 
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
-        dfs(0, "", "", result, 2 * n , 0 , 0 );
+        dfs(0, "", "", result, 2 * n, 0, 0);
         return result;
     }
 
@@ -28,13 +28,13 @@ public class Leetcode00022 {
     private void dfs(int index, String s, String currentStr, List<String> result, int n, int leftCount, int rightCount) {
         currentStr += s;
         if (index == n) {
-            if( leftCount == rightCount &&isValid(currentStr)){
+            if (leftCount == rightCount && isValid(currentStr)) {
                 result.add(currentStr);
             }
             return;
         }
-        dfs(index + 1, LEFT, currentStr, result, n , leftCount+1, rightCount);
-        dfs(index + 1, RIGHT, currentStr, result, n, leftCount, rightCount +1);
+        dfs(index + 1, LEFT, currentStr, result, n, leftCount + 1, rightCount);
+        dfs(index + 1, RIGHT, currentStr, result, n, leftCount, rightCount + 1);
     }
 
     /**
@@ -47,12 +47,12 @@ public class Leetcode00022 {
         Stack<Character> taStack = new Stack<Character>();
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if(maps.containsKey(c)) {
+            if (maps.containsKey(c)) {
                 taStack.push(c);
-            }else {
+            } else {
                 // 任务栈栈顶元素要跟之相匹配，否则就是false
-                if(taStack.isEmpty()) return false;
-                if(maps.get(taStack.peek()) != c) return false;
+                if (taStack.isEmpty()) return false;
+                if (maps.get(taStack.peek()) != c) return false;
                 taStack.pop();
             }
         }
@@ -60,11 +60,43 @@ public class Leetcode00022 {
     }
 
 
+    /**
+     * 方法二 使用回溯模版解
+     */
+    List<String> ans = new ArrayList<>();
+    public List<String> generateParenthesis2(int n) {
+        backtrack(new StringBuilder(), n, n);
+        return ans;
+    }
+
+    /**
+     * @param cur        当前拼接的字符串结果
+     * @param leftCount  剩余的左括号数量
+     * @param rightCount 剩余的右括号数量
+     */
+    private void backtrack(StringBuilder cur, int leftCount, int rightCount) {
+        if (leftCount < 0 || rightCount < 0) return;
+        if (leftCount > rightCount) return;
+        if (leftCount == 0 && rightCount == 0) {
+            ans.add(cur.toString());
+            return;
+        }
+
+        // 做选择
+        cur.append('(');
+        backtrack(cur, leftCount - 1, rightCount);
+        cur.deleteCharAt(cur.length() - 1); // 撤销选择
+
+        // 做选择
+        cur.append(')');
+        backtrack(cur, leftCount, rightCount - 1);
+        cur.deleteCharAt(cur.length() - 1);// 撤销选择
+    }
 
     public static class Test {
         public static void main(String[] args) {
             Leetcode00022 solution = new Leetcode00022();
-            List<String> strings = solution.generateParenthesis(2);
+            List<String> strings = solution.generateParenthesis2(3);
             System.out.println(strings);
         }
     }

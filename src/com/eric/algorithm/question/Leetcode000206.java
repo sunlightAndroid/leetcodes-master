@@ -4,7 +4,7 @@ import com.eric.algorithm.model.ListNode;
 
 public class Leetcode000206 {
     public ListNode reverseList(ListNode head) {
-        ListNode tempNode = new ListNode(-1,null);
+        ListNode tempNode = new ListNode(-1, null);
         ListNode lastNode = null;
         for (ListNode node = head; node != null; node = node.next) {
             lastNode = tempNode.next;
@@ -14,6 +14,18 @@ public class Leetcode000206 {
         }
         return tempNode.next;
     }
+
+    /**
+     * 方法二 使用递归
+     */
+    public ListNode reverse(ListNode head) {
+        if(head == null || head.next == null) return head;
+        ListNode reverse = reverse(head.next);
+        head.next.next = head;
+        head.next = null;
+        return reverse;
+    }
+
 
     public static class Test {
         public static void main(String[] args) {
@@ -29,7 +41,7 @@ public class Leetcode000206 {
             fourNode.next = fiveNode;
 
             Leetcode000206 coLeetcode000206 = new Leetcode000206();
-            ListNode resListNode  = coLeetcode000206.reverseList(head);
+            ListNode resListNode = coLeetcode000206.reverse(head);
             System.out.println("=========================");
             System.out.println(resListNode.toString());
         }
