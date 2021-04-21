@@ -69,7 +69,7 @@ public class leetcode0015 {
                     while (j < nums.length && nums[j] == nums[j-1]) {
                         j++;
                     }
-                    while (k >j && nums[k] == nums[+1]) {
+                    while (k >j && nums[k] == nums[1]) {
                         k--;
                     }
                     resultList.add(list);
