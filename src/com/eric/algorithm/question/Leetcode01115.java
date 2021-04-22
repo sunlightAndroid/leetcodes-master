@@ -47,8 +47,7 @@ public class Leetcode01115 {
     }
 
 
-    static class FooBar {
-
+   static class FooBar {
         private int n;
 
         ReentrantLock lock = new ReentrantLock();
@@ -69,13 +68,13 @@ public class Leetcode01115 {
 
                 try {
                     lock.lock();
-                    if (cur == 1) {
-                        printFoo.run();
-                        cur = 2;
-                    } else {
+                    if (cur != 1) {
                         condition1.await();
-                        condition2.signal();
                     }
+                    printFoo.run();
+                    cur = 2;
+                    condition2.signal();
+
                 } finally {
                     lock.unlock();
                 }
@@ -88,13 +87,12 @@ public class Leetcode01115 {
 
                 try {
                     lock.lock();
-                    if (cur == 2) {
-                        printBar.run();
-                        cur = 1;
-                    } else {
+                    if (cur != 2) {
                         condition2.await();
-                        condition1.signal();
                     }
+                    printBar.run();
+                    cur = 1;
+                    condition1.signal();
                 } finally {
                     lock.unlock();
                 }

@@ -76,7 +76,9 @@ public class Leetcode01114 {
 //    }
 //}
 
-
+/**
+ * 解法二： 通过ReentrantLock的条件方法Condition，控制线程的等待与唤醒
+ */
 class Foo {
 
     ReentrantLock lock = new ReentrantLock();
@@ -129,3 +131,48 @@ class Foo {
         }
     }
 }
+
+
+/**
+ * 解法三： 通过synchronized来解
+ */
+//class Foo {
+//
+//    volatile int num = 1;
+//    Object lock = new Object();
+//
+//    public Foo() {
+//    }
+//
+//    public void first(Runnable printFirst) throws InterruptedException {
+//        synchronized (lock) {
+//            while (num != 1) {
+//                lock.wait();
+//            }
+//            printFirst.run();
+//            num = 2;
+//            lock.notifyAll();
+//        }
+//    }
+//
+//    public void second(Runnable printSecond) throws InterruptedException {
+//        synchronized (lock){
+//            while (num !=2){
+//                lock.wait();
+//            }
+//            printSecond.run();
+//            num = 3;
+//            lock.notifyAll();
+//        }
+//    }
+//
+//    public void third(Runnable printThird) throws InterruptedException {
+//        synchronized(lock){
+//           while (num !=3){
+//               lock.wait();
+//           }
+//           printThird.run();
+//           lock.notifyAll();
+//        }
+//    }
+//}
